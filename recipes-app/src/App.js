@@ -8,6 +8,9 @@ import Card from 'react-bootstrap/Card';
 class RecipeCard extends React.Component {
   constructor(props) {
     super(props);
+    var state = {
+      visible: true,
+    }
   }
 
   render() {
@@ -62,13 +65,15 @@ class RandomRecipe extends React.Component{
  }
 }
 
-class List extends React.Component {
-  constructor(props) {
+class FilterRecipesByName extends React.Component{
+  constructor(props){
     super(props);
     this.state = {
+      name_contains: '',
       error: null,
       isLoaded: false,
-      recipes: []
+      recipes: [],
+      filtered_recipes: []
     };
   }
 
@@ -95,6 +100,46 @@ class List extends React.Component {
       )
   }
 
+  handleChange = (e) => {
+
+    this.setState({
+        name_contains: (e.target.value)
+    });
+
+    var recipes = []
+
+    for (var i = 0; i < this.state.recipes.length; i++) {
+      if ( this.state.recipes[i][0].includes(e.target.value)){
+        recipes.push(recipes);
+      }
+    };
+
+    this.setState({
+        filtered_recipes: recipes
+    });
+
+  }
+
+  render() {
+    return (
+      <div>
+        <label htmlFor="filter">Filter by Title Contains: </label>
+        <input type="text" id="filter"
+          value={this.state.name_contains}
+          onChange={this.handleChange}/>
+        {this.state.filtered_recipes.map((recipe, index) => (
+          <RecipeCard key={index} recipe={recipe[0]} link={recipe[1]}></RecipeCard>))}
+      </div>
+    )
+  }
+}
+
+class List extends React.Component {
+  constructor(props){
+    super(props)
+  }
+
+
   render() {
     return(
       this.state.recipes.map(recipe =>
@@ -112,4 +157,4 @@ class App extends React.Component{
   }
 }
 
-export default App;
+export default FilterRecipesByName;
