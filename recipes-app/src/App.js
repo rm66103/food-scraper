@@ -110,9 +110,11 @@ class FilterRecipesByName extends React.Component{
 
     for (var i = 0; i < this.state.recipes.length; i++) {
       if ( this.state.recipes[i][0].includes(e.target.value)){
-        recipes.push(recipes);
+        recipes.push(this.state.recipes[i]);
       }
     };
+
+    console.log(recipes)
 
     this.setState({
         filtered_recipes: recipes
