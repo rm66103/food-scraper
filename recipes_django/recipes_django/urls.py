@@ -20,5 +20,5 @@ from recipes.views import AllRecipesJson
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', AllRecipesJson, name='AllRecipesJson')
+    path('', AllRecipesJson, name='AllRecipesJson')
 ]
