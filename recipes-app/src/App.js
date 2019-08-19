@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import Button from 'react-bootstrap/Button';
@@ -15,11 +14,13 @@ class RecipeCard extends React.Component {
 
   render() {
     return(
+    <div class="mb-2">
       <Card style={{ width: '18rem' }}>
         <Card.Body>
          <a href={this.props.link}>{this.props.recipe}</a>
         </Card.Body>
       </Card>
+  </div>
 
 
     )
@@ -78,7 +79,7 @@ class FilterRecipesByName extends React.Component{
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:8888/recipes-from-csv")
+    fetch("http://127.0.0.1:8000/")
       .then(res => res.json())
       .then(
         (result) => {
@@ -86,7 +87,6 @@ class FilterRecipesByName extends React.Component{
             isLoaded: true,
             recipes: result
           });
-          console.log(this.state.recipes)
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -106,11 +106,10 @@ class FilterRecipesByName extends React.Component{
         name_contains: (e.target.value)
     });
 
-    var recipes = []
-
-    for (var i = 0; i < this.state.recipes.length; i++) {
-      if ( this.state.recipes[i][0].includes(e.target.value)){
-        recipes.push(this.state.recipes[i]);
+    var recipes = [];
+    for (var i = 0; i < Object.keys(this.state.recipes["name"]).length; i++) {
+      if ( this.state.recipes["name"][i].includes(e.target.value)){
+        recipes.push([this.state.recipes["name"][i], this.state.recipes["link"][i]]);
       }
     };
 
@@ -124,13 +123,22 @@ class FilterRecipesByName extends React.Component{
 
   render() {
     return (
-      <div>
-        <label htmlFor="filter">Filter by Title Contains: </label>
-        <input type="text" id="filter"
-          value={this.state.name_contains}
-          onChange={this.handleChange}/>
-        {this.state.filtered_recipes.map((recipe, index) => (
-          <RecipeCard key={index} recipe={recipe[0]} link={recipe[1]}></RecipeCard>))}
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-8 col-md-4 offset-2 offset-md-4">
+                <div class="bg-white p-4 mt-5">
+                    <h1>Food Scraper</h1>
+                    <p>Type in your favorite ingredient to get started.</p>
+                    <label htmlFor="filter"><b>Ingredient</b></label><br />
+                    <input type="text" id="filter"
+                      value={this.state.name_contains}
+                      onChange={this.handleChange}
+                      class="mb-3"/>
+                        {this.state.filtered_recipes.map((recipe, index) => (
+                          <div class="w-100 d-flex justify-content-center"><RecipeCard key={index} recipe={recipe[0]} link={recipe[1]}></RecipeCard></div>))}
+                  </div>
+            </div>
+        </div>
       </div>
     )
   }
