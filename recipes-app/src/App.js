@@ -15,11 +15,13 @@ class RecipeCard extends React.Component {
 
   render() {
     return(
+    <div class="mb-2">
       <Card style={{ width: '18rem' }}>
         <Card.Body>
          <a href={this.props.link}>{this.props.recipe}</a>
         </Card.Body>
       </Card>
+  </div>
 
 
     )
@@ -124,13 +126,22 @@ class FilterRecipesByName extends React.Component{
 
   render() {
     return (
-      <div>
-        <label htmlFor="filter">Filter by Title Contains: </label>
-        <input type="text" id="filter"
-          value={this.state.name_contains}
-          onChange={this.handleChange}/>
-        {this.state.filtered_recipes.map((recipe, index) => (
-          <RecipeCard key={index} recipe={recipe[0]} link={recipe[1]}></RecipeCard>))}
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-8 col-md-4 offset-2 offset-md-4">
+                <div class="bg-white p-4 mt-5">
+                    <h1>Food Scraper</h1>
+                    <p>Type in your favorite ingredient to get started.</p>
+                    <label htmlFor="filter"><b>Ingredient</b></label><br />
+                    <input type="text" id="filter"
+                      value={this.state.name_contains}
+                      onChange={this.handleChange}
+                      class="mb-3"/>
+                        {this.state.filtered_recipes.map((recipe, index) => (
+                          <div class="w-100 d-flex justify-content-center"><RecipeCard key={index} recipe={recipe[0]} link={recipe[1]}></RecipeCard></div>))}
+                  </div>
+            </div>
+        </div>
       </div>
     )
   }
