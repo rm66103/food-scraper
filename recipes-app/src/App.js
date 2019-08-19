@@ -79,7 +79,7 @@ class FilterRecipesByName extends React.Component{
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:8000/")
+    fetch("http://mcm66103.pythonanywhere.com/")
       .then(res => res.json())
       .then(
         (result) => {
