@@ -79,7 +79,7 @@ class FilterRecipesByName extends React.Component{
   }
 
   componentDidMount() {
-    fetch("http://mcm66103.pythonanywhere.com/")
+    fetch("https://mcm66103.pythonanywhere.com/")
       .then(res => res.json())
       .then(
         (result) => {
